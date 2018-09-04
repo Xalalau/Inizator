@@ -1,0 +1,6 @@
+[10/06/2016] v1.1
+   -- Forte revisão geral nos comentários;
+   -- Transformei o main() de testes na função exemplo do README.md.
+
+[10/06/2016] v1.0
+   -- Biblioteca separada do meu outro projeto, GMBR DS.

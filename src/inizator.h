@@ -1,5 +1,5 @@
 /*
- * INIZATOR v1.0 [10/06/2016]
+ * INIZATOR v1.1 [10/06/2016]
  * por Xalalau Xubilozo
  * 
  * Licensa: CC BY-NC-SA 4.0
@@ -12,7 +12,7 @@
   #include <stdlib.h>
   #include <string.h>
   #include <errno.h>
-  #include "../../geral/src/geral.h"
+  #include "../../Geral/src/geral.h"
 #endif
 
 #define MAX_CHAR_SECAO 40
@@ -29,6 +29,6 @@ typedef struct nos {
 
 no* ini_ler(char arquivo[]);
 void ini_imprimir(no* no_secao, char secao[]);
-char* ini_buscar(no* leitura, char termo[], char secao[]);
-int ini_alterar_valor(no* no_secao, char parametro[], char secao[], char parametro_novo_valor[]);
-void ini_limpar(no* leitura);
+char* ini_buscar(no* estrutura, char termo[], char secao[]);
+int ini_alterar_valor(no* estrutura, char parametro[], char secao[], char parametro_novo_valor[]);
+no* ini_limpar(no* estrutura);
