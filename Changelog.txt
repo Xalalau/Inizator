@@ -2,7 +2,7 @@ v1.3 [04/09/2018]
 - Versionamento está diferente, nada mais de updates gigantes de uma vez só;
 - Texto para processar todas as seções foi renomeado de "QUALQUER_SECAO" para "";
 - Nova função: ini_inserir();
-- Os argumentos, no geral, foram reorganizados;
+- Os argumentos foram reorganizados;
 - Corrigido problema ao lidar com entradas de nó nulas;
 - Função ini_buscar() melhorada;
 - Retornos das funções foram melhorados;
@@ -12,10 +12,10 @@ v1.3 [04/09/2018]
 - Corrigida possibilidade de overflow em leitura de seções e nomes de parâmetros;
 - Agora o Inizator reclama quando uma seção não é "fechada" até o final de sua linha;
 - Correções na indentação;
-- A função ini_ler foi visualmente bastante melhorada;
+- A função ini_ler() foi dividida em várias outras para facilitar a leitura;
 - Desativei o "caractere de fix" exigido no início dos arquivos;
-- Exemplos atualizados;
-- Biblioteca "Geral" linkada como um submódulo.
+- Os exemplos de uso foram atualizados;
+- A biblioteca "Geral" foi linkada como um submódulo.
 
 v1.2 [28/09/2017]
 - Correções no texto;
