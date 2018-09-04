@@ -1,9 +1,8 @@
 /*
  * INIZATOR v1.1 [10/06/2016]
  * por Xalalau Xubilozo
- * 
- * Licensa: CC BY-NC-SA 4.0
- * http://creativecommons.org/licenses/by-nc-sa/4.0/
+ * https://github.com/xalalau/Xalateca/tree/master/C/Inizator
+ * Licença: MIT
  * */
 
 #ifndef HEADER_FILE

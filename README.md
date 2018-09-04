@@ -1,6 +1,61 @@
-# Biblioteca geral_*
+# Biblioteca ini_*
 
-Funciona no Windows e no Linux.
+Essa biblioteca foi feita para ler e processar informações de arquivos .ini.
+
+Ela funciona no Windows e no Linux.
+
+### Estrutura
+
+É da seguinte forma que o programa espera o texto e o transforma:
+
+Arquivo .ini:
+```ini
+# NÃO APAGUE ESTA LINHA!
+
+[Seção 1]
+
+; Isso é um comentário inútil que vai sumir
+; Outro comentário
+
+pote de mel = ursinho puff
+policia_braba_rio = BOPE
+Bolsonaro = Militar
+
+
+[BIRRR]
+
+; Comentário 1
+
+p1 = NOPE
+p2 = NOPE2
+
+
+
+[Seção 3]
+
+; Outro comentário
+
+link = http://site.com
+PASTA = /home/teste/hu3
+estado = Roraima
+
+
+[Seção -1]
+
+Hu3-Life = Half-Life 3
+
+[Ultima seção]
+
+parametro1 = true
+parametro final = false
+```
+
+Estrutura:
+
+![Imagem da estrutura](http://i.imgur.com/rKYUsO1.png)
+
+
+### Funções
 
 no* **ini_alocar** ( ) { }
 ```
@@ -71,7 +126,7 @@ ENTRADA:
 estrutura = Primeiro nó de uma estrutura de arquivo ini
 ```
 
-##Exemplo de uso
+### Exemplo de uso
 
 ```C
 int main() {
