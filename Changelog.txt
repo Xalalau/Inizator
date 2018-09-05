@@ -1,3 +1,6 @@
+v1.3.1 [04/09/2018]
+- Submódulo "Geral" largado devido a problemas de compilação no Windows.
+
 v1.3 [04/09/2018]
 - Versionamento está diferente, nada mais de updates gigantes de uma vez só;
 - Texto para processar todas as seções foi renomeado de "QUALQUER_SECAO" para "";
