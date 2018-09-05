@@ -189,7 +189,8 @@ int ini_ler_parametrosDaSecao(FILE *fp, char letra_inicial, ini **inicio, ini **
 	 * ponteiro2 = Anda pelos parâmetros junto com o ponteiro 1,
 	 *
 	 * RETORNO:
-	 * -1 = Falhou
+	 * 1 = Sucesso.
+	 * 0 = Falhou
 	 *
 	 */
 
@@ -247,7 +248,7 @@ int ini_ler_parametrosDaSecao(FILE *fp, char letra_inicial, ini **inicio, ini **
 			if (strcmp((**ponteiro1).parametro, "") != 0) {
 				if((*ponteiro1 = ini_alocar()) == NULL) {
 					ini_limpar(*inicio);
-					return -1;
+					return 0;
 				}
 				(**ponteiro2).proximo_parametro = *ponteiro1;
 				strcpy((**ponteiro1).secao, (**topo).secao);
@@ -279,7 +280,7 @@ int ini_ler_parametrosDaSecao(FILE *fp, char letra_inicial, ini **inicio, ini **
 
 							// Se "tamanho" ficar grande demais, sou obrigado a cortar a linha
 							if (tamanho == MAX_CHAR_PARAMETRO_VALOR) {
-								caracteres[tamanho--] = '\0';
+								caracteres[--tamanho] = '\0';
 								printf("\n[Inizator] O seguinte valor de parametro passou o limite de '%d' caracteres:\n%s\n",
 										MAX_CHAR_PARAMETRO_VALOR, caracteres);
 								while ((c = fgetc(fp)) != EOF)
@@ -313,6 +314,8 @@ int ini_ler_parametrosDaSecao(FILE *fp, char letra_inicial, ini **inicio, ini **
 			break;
 		}
 	}
+
+	return 1;
 }
 
 int ini_ler_finalizar(ini **inicio, ini **topo, ini **ponteiro1, ini **ponteiro2) {
@@ -326,14 +329,15 @@ int ini_ler_finalizar(ini **inicio, ini **topo, ini **ponteiro1, ini **ponteiro2
 	 * ponteiro2 = Anda pelos parâmetros junto com o ponteiro 1,
 	 *
 	 * RETORNO:
-	 * -1 = Falhou
+	 * 0 = Falha,
+	 * 1 = Sucesso.
 	 *
 	 */
 
 	// Esse nó finaliza os nós criados na última seção
 	if((*ponteiro1 = ini_alocar()) == NULL) {
 		ini_limpar(*inicio);
-		return -1;
+		return 0;
 	}
 	(**ponteiro2).proximo_parametro = *ponteiro1;
 	(**ponteiro1).proximo_parametro = NULL;
@@ -342,11 +346,13 @@ int ini_ler_finalizar(ini **inicio, ini **topo, ini **ponteiro1, ini **ponteiro2
 	// Esse nó finaliza a última seção
 	if((*ponteiro1 = ini_alocar()) == NULL) {
 		ini_limpar(*inicio);
-		return -1;
+		return 0;
 	}
 	(**topo).proxima_secao = *ponteiro1;
 	(**ponteiro1).proximo_parametro = NULL;
 	(**ponteiro1).proxima_secao = NULL;
+
+	return 1;
 }
 
 ini* ini_ler(char arquivo[]) {
@@ -400,14 +406,14 @@ ini* ini_ler(char arquivo[]) {
 
 		// Adicionar os parâmetros de uma seção
 		if (ler_parametros == 1)
-			if (ini_ler_parametrosDaSecao(fp, c, &inicio, &topo, &ponteiro1, &ponteiro2) == -1)
+			if ( ! ini_ler_parametrosDaSecao(fp, c, &inicio, &topo, &ponteiro1, &ponteiro2))
 				return NULL;
 	}
 
 	fclose(fp);
 
 	// Finalizar seção atual adicionando parâmetro vazio e próxima seção vazia
-	if (ini_ler_finalizar(&inicio, &topo, &ponteiro1, &ponteiro2) == -1)
+	if ( ! ini_ler_finalizar(&inicio, &topo, &ponteiro1, &ponteiro2))
 		return NULL;
 
 	return inicio;

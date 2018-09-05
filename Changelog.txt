@@ -1,3 +1,7 @@
+v1.3.2 [05/09/2018]
+- Melhorias em retornos de função;
+- Conserto de possível overflow.
+
 v1.3.1 [04/09/2018]
 - Submódulo "Geral" largado devido a problemas de compilação no Windows.
 
