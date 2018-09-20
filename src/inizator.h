@@ -12,6 +12,7 @@
 	#define MAX_CHAR_PARAMETRO_NOME 50
 	#define MAX_CHAR_PARAMETRO_VALOR 700
 
+	// Nó = Bloco de informação para uma entrada do arquivo .ini
 	typedef struct no_ {
 		char secao[MAX_CHAR_SECAO];
 		char parametro[MAX_CHAR_PARAMETRO_NOME];
@@ -20,11 +21,14 @@
 		struct no_* proximo_parametro;
 	} no;
 
-	no* ini_ler(char arquivo[]);
-	void ini_imprimir(no* estrutura, char secao[]);
-	char* ini_buscar(no* estrutura, char secao[], char termo[]);
-	int ini_alterar(no* estrutura, char secao[], char parametro[], char novo_valor[]);
-	int ini_inserir(no* estrutura, char secao[], char parametro[], char valor[]);
-	int ini_limpar(no* estrutura);
+	// [Classe] Exposição das funções necessárias para os usuários
+	struct Inizator {
+		no* (*ler)(char arquivo[]);
+		void (*imprimir)(no* inicio, char secao[]);
+		char* (*buscar)(no* inicio, char secao[], char termo[]);
+		int (*alterar)(no* inicio, char secao[], char parametro[], char novo_valor[]);
+		int (*inserir)(no* inicio, char secao[], char parametro[], char valor[]);
+		int (*limpar)(no* no_atual);
+	} ini;
 
 #endif //INIZATOR_H

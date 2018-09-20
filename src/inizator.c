@@ -10,7 +10,9 @@
 	#define SISTEMA "Windows"
 #endif
 
-no* ini_alocar() {
+static int limpar(no* no_atual);
+
+static no* alocar() {
 	/*
 	 * Aloca um novo nó para uso na estrutura de leitura do ini
 	 *
@@ -22,7 +24,7 @@ no* ini_alocar() {
 
 	no* alocacao;
 
-	if ((alocacao = malloc(sizeof(ini))) == NULL) {
+	if ((alocacao = malloc(sizeof(no))) == NULL) {
 		printf("\n[Inizator] Erro ao tentar alocar memoria para um no. (Ela esta muito cheia?)\n");
 		return NULL;
 	}
@@ -30,7 +32,7 @@ no* ini_alocar() {
 	return alocacao;
 }
 
-int ini_ler_fix(int c, FILE *fp) {
+static int ler_fix(int c, FILE *fp) {
 	/*
 	 * HACK - Isso serve para limpar um lixo que aparece no início da leitura do arquivo!
 	 * A função procura por um '#', descartando tudo que vem antes e sua linha.
@@ -54,7 +56,7 @@ int ini_ler_fix(int c, FILE *fp) {
 	return 0;
 }
 
-void ini_ler_comentario(FILE *fp) {
+static void ler_comentario(FILE *fp) {
 	/*
 	 * Ignorar linhas que iniciaram com o caractere de comentário
 	 *
@@ -71,7 +73,7 @@ void ini_ler_comentario(FILE *fp) {
 	}
 }
 
-int ini_ler_secao(FILE *fp, no **inicio, no **topo, no **ponteiro1, no **ponteiro2) {
+static int ler_secao(FILE *fp, no **inicio, no **topo, no **ponteiro1, no **ponteiro2) {
 	/*
 	 * Adicionar os parâmetros de uma seção
 	 *
@@ -146,8 +148,8 @@ int ini_ler_secao(FILE *fp, no **inicio, no **topo, no **ponteiro1, no **ponteir
 					break;
 
 				// Crio um nó para finalizar seção anterior
-				if((*ponteiro1 = ini_alocar()) == NULL) {
-					ini_limpar(*inicio);
+				if((*ponteiro1 = alocar()) == NULL) {
+					limpar(*inicio);
 					return -1;
 				}
 				(**ponteiro2).proximo_parametro = *ponteiro1;
@@ -155,8 +157,8 @@ int ini_ler_secao(FILE *fp, no **inicio, no **topo, no **ponteiro1, no **ponteir
 				(**ponteiro1).proxima_secao = NULL;
 
 				// Crio o primeiro nó da seção atual
-				if((*ponteiro1 = ini_alocar()) == NULL) {
-					ini_limpar(*inicio);
+				if((*ponteiro1 = alocar()) == NULL) {
+					limpar(*inicio);
 					return -1;
 				}
 				(**topo).proxima_secao = *ponteiro1;
@@ -176,7 +178,7 @@ int ini_ler_secao(FILE *fp, no **inicio, no **topo, no **ponteiro1, no **ponteir
 	return ler_parametros;
 }
 
-int ini_ler_parametrosDaSecao(FILE *fp, char letra_inicial, no **inicio, no **topo, no **ponteiro1, no **ponteiro2) {
+static int ler_parametrosDaSecao(FILE *fp, char letra_inicial, no **inicio, no **topo, no **ponteiro1, no **ponteiro2) {
 	/*
 	 * Adicionar os parâmetros de uma seção
 	 *
@@ -246,8 +248,8 @@ int ini_ler_parametrosDaSecao(FILE *fp, char letra_inicial, no **inicio, no **to
 
 			// Alocação de novos nós de parâmetro
 			if (strcmp((**ponteiro1).parametro, "") != 0) {
-				if((*ponteiro1 = ini_alocar()) == NULL) {
-					ini_limpar(*inicio);
+				if((*ponteiro1 = alocar()) == NULL) {
+					limpar(*inicio);
 					return 0;
 				}
 				(**ponteiro2).proximo_parametro = *ponteiro1;
@@ -318,7 +320,7 @@ int ini_ler_parametrosDaSecao(FILE *fp, char letra_inicial, no **inicio, no **to
 	return 1;
 }
 
-int ini_ler_finalizar(no **inicio, no **topo, no **ponteiro1, no **ponteiro2) {
+static int ler_finalizar(no **inicio, no **topo, no **ponteiro1, no **ponteiro2) {
 	/*
 	 * Finalizar seção atual adicionando parâmetro vazio e próxima seção vazia
 	 *
@@ -335,8 +337,8 @@ int ini_ler_finalizar(no **inicio, no **topo, no **ponteiro1, no **ponteiro2) {
 	 */
 
 	// Esse nó finaliza os nós criados na última seção
-	if((*ponteiro1 = ini_alocar()) == NULL) {
-		ini_limpar(*inicio);
+	if((*ponteiro1 = alocar()) == NULL) {
+		limpar(*inicio);
 		return 0;
 	}
 	(**ponteiro2).proximo_parametro = *ponteiro1;
@@ -344,8 +346,8 @@ int ini_ler_finalizar(no **inicio, no **topo, no **ponteiro1, no **ponteiro2) {
 	(**ponteiro1).proxima_secao = NULL;
 
 	// Esse nó finaliza a última seção
-	if((*ponteiro1 = ini_alocar()) == NULL) {
-		ini_limpar(*inicio);
+	if((*ponteiro1 = alocar()) == NULL) {
+		limpar(*inicio);
 		return 0;
 	}
 	(**topo).proxima_secao = *ponteiro1;
@@ -355,7 +357,7 @@ int ini_ler_finalizar(no **inicio, no **topo, no **ponteiro1, no **ponteiro2) {
 	return 1;
 }
 
-no* ini_ler(char arquivo[]) {
+static no* ler(char arquivo[]) {
 	/*
 	 * Lê o arquivo ini e gera uma esturuta de nós contendo todos os seus dados
 	 *
@@ -370,14 +372,14 @@ no* ini_ler(char arquivo[]) {
 
 	int c, ler_parametros = 0;
 	//int fix = 0; /* Desativado */
-	no *topo, *inicio, *ponteiro1, *ponteiro2;
+	no *inicio, *topo, *ponteiro1, *ponteiro2;
 	FILE * fp = fopen(arquivo, "r");
 
 	if (fp == NULL)
 		return NULL;
 
 	// Inicialização dos ponteiros no* no primeiro nó
-	if ((inicio = topo = ponteiro1 = ponteiro2 = ini_alocar()) == NULL)
+	if ((inicio = topo = ponteiro1 = ponteiro2 = alocar()) == NULL)
 		return NULL;
 
 	// Indicativo para reconhecer a primeira seção
@@ -388,16 +390,16 @@ no* ini_ler(char arquivo[]) {
 		/*
 		// FIX - Isso limpa um lixo que aparece no começo do input
 		if (fix == 0)
-			fix = ini_ler_fix(c, fp);
+			fix = ler_fix(c, fp);
 		*/
 
 		// Pular comentários
 		if (c == ';')
-			ini_ler_comentario(fp);
+			ler_comentario(fp);
 
 		// Criar/Fechar seção
 		if (c == '[')
-			if ((ler_parametros = ini_ler_secao(fp, &inicio, &topo, &ponteiro1, &ponteiro2)) == -1)
+			if ((ler_parametros = ler_secao(fp, &inicio, &topo, &ponteiro1, &ponteiro2)) == -1)
 				return NULL;
 
 		// Pular caracteres inconvenientes
@@ -406,20 +408,20 @@ no* ini_ler(char arquivo[]) {
 
 		// Adicionar os parâmetros de uma seção
 		if (ler_parametros == 1)
-			if ( ! ini_ler_parametrosDaSecao(fp, c, &inicio, &topo, &ponteiro1, &ponteiro2))
+			if ( ! ler_parametrosDaSecao(fp, c, &inicio, &topo, &ponteiro1, &ponteiro2))
 				return NULL;
 	}
 
 	fclose(fp);
 
 	// Finalizar seção atual adicionando parâmetro vazio e próxima seção vazia
-	if ( ! ini_ler_finalizar(&inicio, &topo, &ponteiro1, &ponteiro2))
+	if ( ! ler_finalizar(&inicio, &topo, &ponteiro1, &ponteiro2))
 		return NULL;
 
 	return inicio;
 }
 
-void ini_imprimir(no* estrutura, char secao[]) {
+static void imprimir(no *inicio, char secao[]) {
 	/*
 	 * Imprime as informacoes coletadas no arquivo ini
 	 *
@@ -429,18 +431,18 @@ void ini_imprimir(no* estrutura, char secao[]) {
 	 *
 	 */
 
-	no* no_parametro = estrutura;
-
 	// Evito que rode a função em um nó nulo
-	if (estrutura == NULL)
+	if (inicio == NULL)
 		return;
 
+	no* no_parametro = inicio;
+
 	// Enquanto houver seções...
-	while ((*estrutura).proxima_secao != NULL) {
+	while ((*inicio).proxima_secao != NULL) {
 		// Se eu estiver na seção buscada ou ela não importar...
 		if ((strcmp((*no_parametro).secao, secao) == 0) || (strcmp(secao, "") == 0)) {
 			// Imprimo a seção
-			printf("\n[%s]\n", (*estrutura).secao);
+			printf("\n[%s]\n", (*inicio).secao);
 
 			// Enquanto houver parâmetros...
 			while ((*no_parametro).proximo_parametro != NULL) {
@@ -455,17 +457,17 @@ void ini_imprimir(no* estrutura, char secao[]) {
 		}
 
 		// Continuo a ler as seções se secao[] for ""
-		estrutura = (*estrutura).proxima_secao;
-		no_parametro = estrutura;
+		inicio = (*inicio).proxima_secao;
+		no_parametro = inicio;
 	}
 }
 
-char* ini_buscar(no* estrutura, char secao[], char termo[]) {
+static char* buscar(no *inicio, char secao[], char termo[]) {
 	/*
 	 * Checa se um dado parâmetro está expresso no arquivo ini
 	 *
 	 * ENTRADA:
-	 * estrutura = Primeiro nó de uma estrutura de arquivo ini,
+	 * inicio = Primeiro nó de uma estrutura de arquivo ini,
 	 * termo = Parâmetro buscado,
 	 * secao = Nome da seção onde haverá a busca (entrar com "" para buscar em todas as seções)
 	 *
@@ -475,12 +477,12 @@ char* ini_buscar(no* estrutura, char secao[], char termo[]) {
 	 *
 	 */
 
-	no* no_secao = estrutura;
-	no* no_parametro = estrutura;
-
 	// Evito que rode a função em um nó nulo
-	if (estrutura == NULL)
+	if (inicio == NULL)
 		return NULL;
+
+	no* no_secao = inicio;
+	no* no_parametro = inicio;
 
 	// Enquanto houver seções...printf("[GMBR DS]Aqui, oh!\n");
 	while ((*no_secao).proxima_secao != NULL) {
@@ -509,12 +511,12 @@ char* ini_buscar(no* estrutura, char secao[], char termo[]) {
 	return NULL;
 }
 
-int ini_alterar(no* estrutura, char secao[], char parametro[], char valor[]) {
+static int alterar(no *inicio, char secao[], char parametro[], char valor[]) {
 	/*
 	 * Busco por um parâmetro e altero o valor dele
 	 *
 	 * ENTRADA:
-	 * estrutura = Primeiro nó de uma estrutura de arquivo ini,
+	 * inicio = Primeiro nó de uma estrutura de arquivo ini,
 	 * parametro = Nome do parâmetro que será alterado,
 	 * secao = Seção do parâmetro a ser alterado (entrar com "" em secao[] para alterar toda ocorrência desse parâmetro),
 	 * valor = Novo valor do parâmetro
@@ -526,13 +528,13 @@ int ini_alterar(no* estrutura, char secao[], char parametro[], char valor[]) {
 	 *
 	 */
 
-	no* no_secao = estrutura;
-	no* no_parametro = estrutura;
-	int i = 0;
-
 	// Evito que rode a função em um nó nulo
-	if (estrutura == NULL)
+	if (inicio == NULL)
 		return 0;
+
+	no* no_secao = inicio;
+	no* no_parametro = inicio;
+	int i = 0;
 
 	// Checo se parametro_valor[] não é grande demais
 	while (valor[i] != '\0')
@@ -571,12 +573,12 @@ int ini_alterar(no* estrutura, char secao[], char parametro[], char valor[]) {
 	return i;
 }
 
-int ini_inserir(no* estrutura, char secao[], char parametro[], char valor[]) {
+static int inserir(no *inicio, char secao[], char parametro[], char valor[]) {
 	/*
 	 * Insere um novo parâmetro em dada seção
 	 *
 	 * ENTRADA:
-	 * estrutura = Primeiro nó de uma estrutura de arquivo ini,
+	 * inicio = Primeiro nó de uma estrutura de arquivo ini,
 	 * secao = Seção do parâmetro a ser inserido,
 	 * parametro = Nome do parâmetro que será inserido,
 	 * valor = Valor do parâmetro.
@@ -588,15 +590,15 @@ int ini_inserir(no* estrutura, char secao[], char parametro[], char valor[]) {
 	 */
 
 	// Evito que rode a função em um nó nulo
-	if (estrutura == NULL)
+	if (inicio == NULL)
 		return 0;
 
-	no *no_secao = estrutura;
-	no *no_parametro = estrutura;
+	no *no_secao = inicio;
+	no *no_parametro = inicio;
 	no *secao_anterior, *no_anterior, *novo;
 
 	// Crio o nó que será inserido
-	if((novo = ini_alocar()) == NULL)
+	if((novo = alocar()) == NULL)
 		return 0;
 
 	// Guardo as informações no novo nó
@@ -643,7 +645,7 @@ int ini_inserir(no* estrutura, char secao[], char parametro[], char valor[]) {
 	return 1;
 }
 
-int ini_limpar(no* no_atual) {
+static int limpar(no* no_atual) {
 	/* Libera todos os nós que foram alocados na leitura do ini
 	 *
 	 * ENTRADA:
@@ -661,14 +663,24 @@ int ini_limpar(no* no_atual) {
 
 	// Mudo para próximos parâmetros
 	if ((*no_atual).proximo_parametro != NULL)
-		ini_limpar((*no_atual).proximo_parametro);
+		limpar((*no_atual).proximo_parametro);
 
 	// Mudo para próximas seções
 	if ((*no_atual).proxima_secao != NULL)
-		ini_limpar((*no_atual).proxima_secao);
+		limpar((*no_atual).proxima_secao);
 
 	// Limpo o que estiver aberto
 	free(no_atual);
 
 	return 1;
 }
+
+// [Classe] Exposição das funções necessárias para os usuários
+struct Inizator ini = {
+	.ler = &ler,
+	.imprimir = &imprimir,
+	.buscar = &buscar,
+	.alterar = &alterar,
+	.inserir = &inserir,
+	.limpar = &limpar
+};
