@@ -143,12 +143,12 @@ $ git submodule init
 $ git submodule update
 ```
 
-2) Importe o arquivo **inizator.h** (isso deixará as funções do Inizator disponíveis através do termo **ini.**);
-3) Crie o ponteiro de **no** inicial com **ini.ler()**;
-4) Faça as operações que quiser;
+2) Importe o arquivo **inizator.h**;
+3) Crie o ponteiro de **no** com **ini.ler()**;
+4) Faça as operações que quiser com o tempo termo **ini.** e com os #define;
 5) Antes de fechar o seu programa, desaloque a leitura do ini com **ini.limpar()**.
 
-Assim:
+Assim, por exemplo:
 
 ```C
 #include "inizator.h"
