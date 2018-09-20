@@ -435,14 +435,15 @@ static void imprimir(no *inicio, char secao[]) {
 	if (inicio == NULL)
 		return;
 
+	no* no_secao = inicio;
 	no* no_parametro = inicio;
 
 	// Enquanto houver seções...
-	while ((*inicio).proxima_secao != NULL) {
+	while ((*no_secao).proxima_secao != NULL) {
 		// Se eu estiver na seção buscada ou ela não importar...
 		if ((strcmp((*no_parametro).secao, secao) == 0) || (strcmp(secao, "") == 0)) {
 			// Imprimo a seção
-			printf("\n[%s]\n", (*inicio).secao);
+			printf("\n[%s]\n", (*no_secao).secao);
 
 			// Enquanto houver parâmetros...
 			while ((*no_parametro).proximo_parametro != NULL) {
@@ -457,8 +458,8 @@ static void imprimir(no *inicio, char secao[]) {
 		}
 
 		// Continuo a ler as seções se secao[] for ""
-		inicio = (*inicio).proxima_secao;
-		no_parametro = inicio;
+		no_secao = (*no_secao).proxima_secao;
+		no_parametro = no_secao;
 	}
 }
 
