@@ -1,4 +1,4 @@
-# Biblioteca ini_*
+# Biblioteca ini.*
 
 Criada para ler e manipular informações de arquivos .ini.
 
