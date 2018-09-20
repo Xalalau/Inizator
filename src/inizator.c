@@ -678,7 +678,7 @@ static int limpar(no* no_atual) {
 }
 
 // [Classe] Exposição das funções necessárias para os usuários
-struct Inizator ini = {
+struct inizator_h ini = {
 	.ler = &ler,
 	.imprimir = &imprimir,
 	.buscar = &buscar,
