@@ -56,97 +56,80 @@ Estrutura:
 
 ini* **ler** (char arquivo[])
 ```
-	/* 
-	 * Lê o arquivo ini e gera uma esturuta de nós contendo todos os seus dados
-	 *
-	 * ENTRADA:
-	 * arquivo[] = Nome do arquivo ini a ser aberto
-	 *
-	 * RETORNO:
-	 * ini* = Sucesso,
-	 * NULL = Falhou
-	 * 
-	 */
+Lê o arquivo ini e gera uma esturuta de nós contendo todos os seus dados
+
+ENTRADA:
+arquivo[] = Nome do arquivo ini a ser aberto
+
+RETORNO:
+ini* = Sucesso,
+NULL = Falhou
 ```
 
 void **imprimir** (ini* inicio, char secao[])
 ```
-	/* 
-	 * Imprime as informacoes coletadas no arquivo ini
-	 *
-	 * ENTRADA:
-	 * inicio = Nó a partir do qual a impressão iniciará,
-	 * secao = Nome da seção a imprimir (entrar com "" para imprimir todas as seções a partir de no_secao)
-	 * 
-	 */
+Imprime as informacoes coletadas no arquivo ini
+
+ENTRADA:
+inicio = Nó a partir do qual a impressão iniciará,
+secao = Nome da seção a imprimir (entrar com "" para imprimir todas as seções a partir de no_secao)
 ```
 
 char* **buscar** (ini* inicio, char secao[], char termo[])
 ```
-	/* 
-	 * Checa se um dado parâmetro está expresso no arquivo ini
-	 *
-	 * ENTRADA:
-	 * inicio = Primeiro nó de uma estrutura de arquivo ini,
-	 * termo = Parâmetro buscado,
-	 * secao = Nome da seção onde haverá a busca (entrar com "" para buscar em todas as seções)
-	 * 
-	 * RETORNO:
-	 * char* = Sucesso,
-	 * NULL = Falhou
-	 * 
-	 */
+Checa se um dado parâmetro está expresso no arquivo ini
+
+ENTRADA:
+inicio = Primeiro nó de uma estrutura de arquivo ini,
+termo = Parâmetro buscado,
+secao = Nome da seção onde haverá a busca (entrar com "" para buscar em todas as seções)
+ 
+RETORNO:
+char* = Valor do termo encontrado,
+NULL = Termo não encontrado
 ```
 
 int **alterar** (ini* inicio, char secao[], char parametro[], char valor[])
 ```
-	/*
-	 * Busco por um parâmetro e altero o valor dele
-	 *
-	 * ENTRADA:
-	 * inicio = Primeiro nó de uma estrutura de arquivo ini,
-	 * parametro = Nome do parâmetro que será alterado,
-	 * secao = Seção do parâmetro a ser alterado (entrar com "" em secao[] para alterar toda ocorrência desse parâmetro),
-	 * valor = Novo valor do parâmetro
-	 *
-	 * RETORNO:
-	 * Valor positivo qualquer = Sucesso (é a quantidade de valores alterados),
-	 * 0 = Nada foi alterado,
-	 * -1 = o valor de entrada é grande demais
-	 * 
-	 */
+Busco por um parâmetro e altero o valor dele
+
+ENTRADA:
+inicio = Primeiro nó de uma estrutura de arquivo ini,
+parametro = Nome do parâmetro que será alterado,
+secao = Seção do parâmetro a ser alterado (entrar com "" em secao[] para alterar toda ocorrência desse parâmetro),
+valor = Novo valor do parâmetro
+
+RETORNO:
+Valor positivo qualquer = Sucesso (é a quantidade de valores alterados),
+0 = Nada foi alterado,
+-1 = o valor de entrada é grande demais
 ```
   
 int **inserir** (ini* inicio, char secao[], char parametro[], char valor[])
 ```
-	/* 
-	 * Insere um novo parâmetro em dada seção
-	 *
-	 * ENTRADA:
-	 * inicio = Primeiro nó de uma estrutura de arquivo ini,
-	 * secao = Seção do parâmetro a ser inserido,
-	 * parametro = Nome do parâmetro que será inserido,
-	 * valor = Valor do parâmetro.
-	 *
-	 * RETORNO:
-	 * 0 = Falha,
-	 * 1 = Sucesso.
-	 * 
-	 */
+Insere um novo parâmetro em dada seção
+
+ENTRADA:
+inicio = Primeiro nó de uma estrutura de arquivo ini,
+secao = Seção do parâmetro a ser inserido,
+parametro = Nome do parâmetro que será inserido,
+valor = Valor do parâmetro.
+
+RETORNO:
+0 = Falha,
+1 = Sucesso.
 ```
 
 int **limpar** (ini* no_atual)
 ```
-	/* Libera todos os nós que foram alocados na leitura do ini
-	 *
-	 * ENTRADA:
-	 * no_atual = Entrar com primeiro nó de uma estrutura de arquivo ini. Recursavamente ele vai sendo limpo.
-	 *
-	 * RETORNO:
-	 * 0 = Falha,
-	 * 1 = Sucesso.
-	 * 
-	 */
+Libera todos os nós que foram alocados na leitura do ini
+
+ENTRADA:
+no_atual = Entrar com primeiro nó de uma estrutura de arquivo ini. Recursavamente ele vai sendo limpo.
+
+RETORNO:
+0 = Falha,
+1 = Sucesso.
 ```
 
 ### Utilização
@@ -247,6 +230,7 @@ int main() {
 		printf("'%s' nao foi encontrado pela busca em '%s'!\n", termo2, secao2);
 	else
 		printf("'%s' foi encontrado pela busca em '%s'!\n VALOR: \"%s\"\n", termo2, secao2, resultado_busca);
+
 	if ((resultado_busca = ini.buscar(leitura, "", termo2)) == NULL)
 		printf("\n'%s' nao foi encontrado pela busca geral!\n\n", termo2);
 	else

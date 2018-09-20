@@ -473,8 +473,8 @@ static char* buscar(no *inicio, char secao[], char termo[]) {
 	 * secao = Nome da seção onde haverá a busca (entrar com "" para buscar em todas as seções)
 	 *
 	 * RETORNO:
-	 * char* = Sucesso,
-	 * NULL = Falhou
+	 * char* = Valor do termo encontrado,
+	 * NULL = Termo não encontrado
 	 *
 	 */
 
