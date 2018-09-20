@@ -56,80 +56,80 @@ Estrutura:
 
 ini* **ler** (char arquivo[])
 ```
-Lê o arquivo ini e gera uma esturuta de nós contendo todos os seus dados
+	Lê o arquivo ini e gera uma esturuta de nós contendo todos os seus dados
 
-ENTRADA:
-arquivo[] = Nome do arquivo ini a ser aberto
+	ENTRADA:
+	arquivo = Nome do arquivo ini a ser aberto
 
-RETORNO:
-ini* = Sucesso,
-NULL = Falhou
+	RETORNO:
+	ini* = Sucesso,
+	NULL = Falha
 ```
 
 void **imprimir** (ini* inicio, char secao[])
 ```
-Imprime as informacoes coletadas no arquivo ini
+	Imprime as informações coletadas no arquivo ini
 
-ENTRADA:
-inicio = Nó a partir do qual a impressão iniciará,
-secao = Nome da seção a imprimir (entrar com "" para imprimir todas as seções a partir de no_secao)
+	ENTRADA:
+	inicio = Nó a partir do qual a impressão iniciará,
+	secao = Nome da seção a imprimir (entrar com "" para imprimir todas as seções)
 ```
 
 char* **buscar** (ini* inicio, char secao[], char termo[])
 ```
-Checa se um dado parâmetro está expresso no arquivo ini
+	Checa se um dado parâmetro está expresso no arquivo ini
 
-ENTRADA:
-inicio = Primeiro nó de uma estrutura de arquivo ini,
-termo = Parâmetro buscado,
-secao = Nome da seção onde haverá a busca (entrar com "" para buscar em todas as seções)
- 
-RETORNO:
-char* = Valor do termo encontrado,
-NULL = Termo não encontrado
+	ENTRADA:
+	inicio = Primeiro nó de uma estrutura de arquivo ini,
+	secao = Nome da seção onde haverá a busca (entrar com "" para buscar em todas as seções)
+	termo = Parâmetro buscado,
+	 
+	RETORNO:
+	char* = Valor do termo encontrado,
+	NULL = Termo não encontrado
 ```
 
 int **alterar** (ini* inicio, char secao[], char parametro[], char valor[])
 ```
-Busco por um parâmetro e altero o valor dele
+	Busco por um parâmetro e altero o valor dele
 
-ENTRADA:
-inicio = Primeiro nó de uma estrutura de arquivo ini,
-parametro = Nome do parâmetro que será alterado,
-secao = Seção do parâmetro a ser alterado (entrar com "" em secao[] para alterar toda ocorrência desse parâmetro),
-valor = Novo valor do parâmetro
+	ENTRADA:
+	inicio = Primeiro nó de uma estrutura de arquivo ini,
+	secao = Seção do parâmetro a ser alterado (entrar com "" em secao[] para alterar toda ocorrência desse parâmetro),
+	parametro = Nome do parâmetro que será alterado,
+	valor = Novo valor do parâmetro
 
-RETORNO:
-Valor positivo qualquer = Sucesso (é a quantidade de valores alterados),
-0 = Nada foi alterado,
--1 = o valor de entrada é grande demais
+	RETORNO:
+	Valor positivo qualquer = Sucesso (é a quantidade de valores alterados),
+	0 = Nada foi alterado,
+	-1 = o valor de entrada é grande demais
 ```
   
 int **inserir** (ini* inicio, char secao[], char parametro[], char valor[])
 ```
-Insere um novo parâmetro em dada seção
+	Insere um novo parâmetro em dada seção
 
-ENTRADA:
-inicio = Primeiro nó de uma estrutura de arquivo ini,
-secao = Seção do parâmetro a ser inserido,
-parametro = Nome do parâmetro que será inserido,
-valor = Valor do parâmetro.
+	ENTRADA:
+	inicio = Primeiro nó de uma estrutura de arquivo ini,
+	secao = Seção do parâmetro a ser inserido,
+	parametro = Nome do parâmetro que será inserido,
+	valor = Valor do parâmetro.
 
-RETORNO:
-0 = Falha,
-1 = Sucesso.
+	RETORNO:
+	0 = Falha,
+	1 = Sucesso.
 ```
 
 int **limpar** (ini* no_atual)
 ```
-Libera todos os nós que foram alocados na leitura do ini
+	Libera todos os nós que foram alocados na leitura do ini
 
-ENTRADA:
-no_atual = Entrar com primeiro nó de uma estrutura de arquivo ini. Recursavamente ele vai sendo limpo.
+	ENTRADA:
+	no_atual = Entrar com primeiro nó de uma estrutura de arquivo ini. Recursavamente ele vai sendo limpo.
 
-RETORNO:
-0 = Falha,
-1 = Sucesso.
+	RETORNO:
+	0 = Falha,
+	1 = Sucesso.
 ```
 
 ### Utilização
@@ -144,9 +144,9 @@ $ git submodule update
 ```
 
 2) Importe o arquivo **inizator.h** (isso deixará as funções do Inizator disponíveis através do termo **ini.**);
-3) Crie o "no*" inicial com **ini.ler()**;
+3) Crie o ponteiro de **no** inicial com **ini.ler()**;
 4) Faça as operações que quiser;
-5) Antes de fechar o programa, desaloque a leitura do seu ini com **ini.limpar()**.
+5) Antes de fechar o seu programa, desaloque a leitura do ini com **ini.limpar()**.
 
 Assim:
 
@@ -172,9 +172,9 @@ int main() {
 }
 ```
 
-### Exemplo mais amplo de uso
+### Exemplo de uso mais amplo
 
-Copie o código logo abaixo em um arquivo **teste.c**, dentro da pasta **src**:
+Copie o código logo abaixo em um arquivo **teste.c** dentro da pasta **src** e teste:
 
 ```C
 #include "inizator.h"
@@ -277,7 +277,7 @@ int main() {
 }
 ```
 
-E, se estiver no Linux, rode os seguintes comandos para compilar e testar:
+Se estiver no Linux, rode os seguintes comandos para compilar e testar:
 
 ```sh
 cd caminho_da_pasta_src

@@ -40,6 +40,7 @@ static int ler_fix(int c, FILE *fp) {
 	 * Adicionar os parâmetros de uma seção
 	 *
 	 * ENTRADA:
+	 * c = Caractere que procuraremos para começar a descartar a linha inteira;
 	 * fp = Ponteiro do arquivo ini que está sendo lido,
 	 *
 	 * RETORNO:
@@ -362,11 +363,11 @@ static no* ler(char arquivo[]) {
 	 * Lê o arquivo ini e gera uma esturuta de nós contendo todos os seus dados
 	 *
 	 * ENTRADA:
-	 * arquivo[] = Nome do arquivo ini a ser aberto
+	 * arquivo = Nome do arquivo ini a ser aberto
 	 *
 	 * RETORNO:
 	 * no* = Sucesso,
-	 * NULL = Falhou
+	 * NULL = Falha
 	 *
 	 */
 
@@ -423,11 +424,11 @@ static no* ler(char arquivo[]) {
 
 static void imprimir(no *inicio, char secao[]) {
 	/*
-	 * Imprime as informacoes coletadas no arquivo ini
+	 * Imprime as informações coletadas no arquivo ini
 	 *
 	 * ENTRADA:
-	 * estrutura = Nó a partir do qual a impressão iniciará,
-	 * secao = Nome da seção a imprimir (entrar com "" para imprimir todas as seções a partir de no_secao)
+	 * inicio = Nó a partir do qual a impressão iniciará,
+	 * secao = Nome da seção a imprimir (entrar com "" para imprimir todas as seções)
 	 *
 	 */
 
@@ -469,8 +470,8 @@ static char* buscar(no *inicio, char secao[], char termo[]) {
 	 *
 	 * ENTRADA:
 	 * inicio = Primeiro nó de uma estrutura de arquivo ini,
-	 * termo = Parâmetro buscado,
 	 * secao = Nome da seção onde haverá a busca (entrar com "" para buscar em todas as seções)
+	 * termo = Parâmetro buscado,
 	 *
 	 * RETORNO:
 	 * char* = Valor do termo encontrado,
@@ -518,8 +519,8 @@ static int alterar(no *inicio, char secao[], char parametro[], char valor[]) {
 	 *
 	 * ENTRADA:
 	 * inicio = Primeiro nó de uma estrutura de arquivo ini,
-	 * parametro = Nome do parâmetro que será alterado,
 	 * secao = Seção do parâmetro a ser alterado (entrar com "" em secao[] para alterar toda ocorrência desse parâmetro),
+	 * parametro = Nome do parâmetro que será alterado,
 	 * valor = Novo valor do parâmetro
 	 *
 	 * RETORNO:
@@ -650,7 +651,7 @@ static int limpar(no* no_atual) {
 	/* Libera todos os nós que foram alocados na leitura do ini
 	 *
 	 * ENTRADA:
-	 * no_atual = Entrar com primeiro nó de uma estrutura de arquivo ini. Recursavamente ele vai sendo limpo.
+	 * no_atual = O primeiro nó de uma estrutura de arquivo ini - que recursavamente irá sendo limpo.
 	 *
 	 * RETORNO:
 	 * 0 = Falha,
