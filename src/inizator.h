@@ -11,18 +11,18 @@
 	#define MAX_CHAR_PARAMETRO_NOME 50
 	#define MAX_CHAR_PARAMETRO_VALOR 700
 
-	typedef struct no {
+	typedef struct no_ {
 		char secao[MAX_CHAR_SECAO];
 		char parametro[MAX_CHAR_PARAMETRO_NOME];
 		char valor[MAX_CHAR_PARAMETRO_VALOR];
-		struct no* proxima_secao;
-		struct no* proximo_parametro;
-	} ini;
+		struct no_* proxima_secao;
+		struct no_* proximo_parametro;
+	} no;
 #endif //INIZATOR_H
 
-ini* ini_ler(char arquivo[]);
-void ini_imprimir(ini* estrutura, char secao[]);
-char* ini_buscar(ini* estrutura, char secao[], char termo[]);
-int ini_alterar(ini* estrutura, char secao[], char parametro[], char novo_valor[]);
-int ini_inserir(ini* estrutura, char secao[], char parametro[], char valor[]);
-int ini_limpar(ini* estrutura);
+no* ini_ler(char arquivo[]);
+void ini_imprimir(no* estrutura, char secao[]);
+char* ini_buscar(no* estrutura, char secao[], char termo[]);
+int ini_alterar(no* estrutura, char secao[], char parametro[], char novo_valor[]);
+int ini_inserir(no* estrutura, char secao[], char parametro[], char valor[]);
+int ini_limpar(no* estrutura);
