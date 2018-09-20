@@ -5,7 +5,7 @@ Criada para ler e manipular informações de arquivos .ini.
 Plataformas: Windows e Linux.
 
 
-### Estrutura do arquivo .ini
+## Estrutura do arquivo .ini
 
 É da seguinte forma que o programa espera o texto e o transforma:
 
@@ -52,7 +52,7 @@ Estrutura:
 
 ![Imagem da estrutura](https://i.imgur.com/ls86FWf.png)
 
-### Funções disponíveis
+## Funções disponíveis
 
 ini* **ler** (char arquivo[])
 ```
@@ -132,7 +132,7 @@ int **limpar** (ini* no_atual)
 	1 = Sucesso.
 ```
 
-### Utilização
+## Utilização
 
 1) Clone o repositório e inicialize os submódulos:
 
@@ -172,7 +172,7 @@ int main() {
 }
 ```
 
-### Exemplo de uso mais amplo
+## Exemplo de uso mais amplo
 
 Copie o código logo abaixo em um arquivo **teste.c** dentro da pasta **src** e teste:
 
