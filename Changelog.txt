@@ -1,3 +1,8 @@
+v1.3.3 [20/09/2018]
+- Código migrado para utilização de uma classe;
+- Documentação e exemplos atualizados;
+- Escrita de imprimir() melhorada.
+
 v1.3.2 [05/09/2018]
 - Melhorias em retornos de função;
 - Conserto de possível overflow.
