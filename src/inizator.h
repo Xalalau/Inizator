@@ -1,5 +1,5 @@
 /*
- * INIZATOR v.1.3.3
+ * INIZATOR v.Git
  * por Xalalau Xubilozo
  * https://github.com/xalalau/Xalateca/tree/master/C/Inizator
  * Licença: MIT
